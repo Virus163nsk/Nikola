@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Формы поминовений</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="memorial_forms.css">
+</head>
+<body>
+    <!-- Кнопки для открытия модальных окон -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#molebenModal">
+                    Молебен
+                </button>
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#memorialModal">
+                    Поминовение
+                </button>
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#proskomediaModal">
+                    Проскомидия
+                </button>
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#liturgyModal">
+                    Обедня
+                </button>
+                <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#psalterModal">
+                    Псалтырь
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Молебен -->
+    <div class="modal fade" id="molebenModal" tabindex="-1" aria-labelledby="molebenModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content memorial-modal">
+                <div class="modal-header memorial-header">
+                    <h5 class="modal-title" id="molebenModalLabel">Молебен</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Левая колонка: Форма -->
+                        <div class="col-lg-6">
+                            <form id="molebenForm">
+                                <div class="memorial-instructions">
+                                    <p>Вам нужно написать имена православных христиан, о которых следует молиться. В подаваемых записках необходимо записывать церковные имена (данные при Святом Крещении), указывая их в родительном падеже («Михаила», «Анастасии», «Антония», «Фотинии», «Петра», «Марии») по одному имени в строке или через запятую.</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="molebenNames" class="form-label">Имена</label>
+                                    <textarea class="form-control memorial-textarea" id="molebenNames" name="moleben_names" rows="8" placeholder="Введите имена..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Тип молебна</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType1" value="thanksgiving" checked>
+                                            <label class="form-check-label" for="molebenType1">Благодарственный</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType2" value="sick">
+                                            <label class="form-check-label" for="molebenType2">О болящих</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType3" value="addicted">
+                                            <label class="form-check-label" for="molebenType3">О зависимых</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType4" value="petition">
+                                            <label class="form-check-label" for="molebenType4">Просительный</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType5" value="travel">
+                                            <label class="form-check-label" for="molebenType5">О путешествующих</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType6" value="prisoners">
+                                            <label class="form-check-label" for="molebenType6">О заключенных</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="moleben_type" id="molebenType7" value="beginning">
+                                            <label class="form-check-label" for="molebenType7">На начало дела</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="molebenAmount" class="form-label">Сумма пожертвования</label>
+                                    <input type="text" class="form-control" id="molebenAmount" name="moleben_amount" placeholder="0">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="molebenYourName" class="form-label">Ваше имя</label>
+                                    <input type="text" class="form-control" id="molebenYourName" name="moleben_your_name" placeholder="Введите ваше имя">
+                                </div>
+
+                                <button type="submit" class="btn memorial-submit-btn">Заказать поминовение</button>
+                            </form>
+
+                            <div class="memorial-info mt-3">
+                                <p class="small">Если Ваша оплата прошла, то имена автоматически заносятся в списки и через день их начинают поминать. E-mail: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                            <div class="memorial-form-notice mt-3">
+                                <p>Ориентировочная сумма пожертвования определяется по числу вписанных Вами имён. Затем следует нажать на кнопку «Заказать поминовение» (после этого изменить сумму будет уже невозможно). Также перед отправкой записки о поминовении просим указать своё имя для того, чтобы у Вас была возможность проверить, внесли ли присланные Вами имена в списки поминовений.</p>
+                                <p>Заказав поминовение своих родных и близких за церковным богослужением, очень важно самим приходить на службы в храм вместе с Церковью молиться о дорогих и близких Вам людях; а также не оставлять домашней молитвы о них!</p>
+                                <p>Вопросы, связанные с приёмом поминовений, можно задать по адресу: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка: Декоративный блок -->
+                        <div class="col-lg-6">
+                            <div class="memorial-decorative-block" data-service="moleben">
+                                <div class="decorative-cross" aria-hidden="true"></div>
+                                <h6 class="decorative-service-title">Молебен</h6>
+                                <p class="decorative-service-type" id="molebenDecorativeType">Благодарственный</p>
+                                <div class="names-list" id="molebenNamesList">
+                                    <p class="text-muted">Введите имена в поле слева</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Поминовение -->
+    <div class="modal fade" id="memorialModal" tabindex="-1" aria-labelledby="memorialModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content memorial-modal">
+                <div class="modal-header memorial-header">
+                    <h5 class="modal-title" id="memorialModalLabel">Поминовение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Левая колонка: Форма -->
+                        <div class="col-lg-6">
+                            <form id="memorialForm">
+                                <div class="memorial-instructions">
+                                    <p>Вам нужно написать имена православных христиан, о которых следует молиться. В подаваемых записках необходимо записывать церковные имена (данные при Святом Крещении), указывая их в родительном падеже («Михаила», «Анастасии», «Антония», «Фотинии», «Петра», «Марии») по одному имени в строке или через запятую.</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="memorialNames" class="form-label">Имена</label>
+                                    <textarea class="form-control memorial-textarea" id="memorialNames" name="memorial_names" rows="8" placeholder="Введите имена..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Тип поминовения</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="memorial_type" id="memorialType1" value="health" checked>
+                                            <label class="form-check-label" for="memorialType1">
+                                                О здравии
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="memorial_type" id="memorialType2" value="repose">
+                                            <label class="form-check-label" for="memorialType2">
+                                                Об упокоении
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Срок поминовения</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="memorial_period" id="memorialPeriod1" value="sorokoust" checked>
+                                            <label class="form-check-label" for="memorialPeriod1">Сорокоуст</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="memorial_period" id="memorialPeriod2" value="half_year">
+                                            <label class="form-check-label" for="memorialPeriod2">На полгода</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="memorial_period" id="memorialPeriod3" value="year">
+                                            <label class="form-check-label" for="memorialPeriod3">На год</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="memorialAmount" class="form-label">Сумма пожертвования</label>
+                                    <input type="text" class="form-control" id="memorialAmount" name="memorial_amount" placeholder="0">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="memorialYourName" class="form-label">Ваше имя</label>
+                                    <input type="text" class="form-control" id="memorialYourName" name="memorial_your_name" placeholder="Введите ваше имя">
+                                </div>
+
+                                <button type="submit" class="btn memorial-submit-btn">Заказать поминовение</button>
+                            </form>
+
+                            <div class="memorial-info mt-3">
+                                <p class="small">Если Ваша оплата прошла, то имена автоматически заносятся в списки и через день их начинают поминать. E-mail: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                            <div class="memorial-form-notice mt-3">
+                                <p>Ориентировочная сумма пожертвования определяется по числу вписанных Вами имён. Затем следует нажать на кнопку «Заказать поминовение» (после этого изменить сумму будет уже невозможно). Также перед отправкой записки о поминовении просим указать своё имя для того, чтобы у Вас была возможность проверить, внесли ли присланные Вами имена в списки поминовений.</p>
+                                <p>Заказав поминовение своих родных и близких за церковным богослужением, очень важно самим приходить на службы в храм вместе с Церковью молиться о дорогих и близких Вам людях; а также не оставлять домашней молитвы о них!</p>
+                                <p>Вопросы, связанные с приёмом поминовений, можно задать по адресу: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка: Декоративный блок -->
+                        <div class="col-lg-6">
+                            <div class="memorial-decorative-block" data-service="memorial">
+                                <div class="decorative-cross" aria-hidden="true"></div>
+                                <h6 class="decorative-service-title">Поминовение</h6>
+                                <p class="decorative-service-type type-health" id="memorialDecorativeType">О здравии</p>
+                                <p class="decorative-service-period" id="memorialDecorativePeriod">Сорокоуст</p>
+                                <div class="names-list" id="memorialNamesList">
+                                    <p class="text-muted">Введите имена в поле слева</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Проскомидия -->
+    <div class="modal fade" id="proskomediaModal" tabindex="-1" aria-labelledby="proskomediaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content memorial-modal">
+                <div class="modal-header memorial-header">
+                    <h5 class="modal-title" id="proskomediaModalLabel">Проскомидия</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Левая колонка: Форма -->
+                        <div class="col-lg-6">
+                            <form id="proskomediaForm">
+                                <div class="memorial-instructions">
+                                    <p>Вам нужно написать имена православных христиан, о которых следует молиться. В подаваемых записках необходимо записывать церковные имена (данные при Святом Крещении), указывая их в родительном падеже («Михаила», «Анастасии», «Антония», «Фотинии», «Петра», «Марии») по одному имени в строке или через запятую.</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="proskomediaNames" class="form-label">Имена</label>
+                                    <textarea class="form-control memorial-textarea" id="proskomediaNames" name="proskomedia_names" rows="8" placeholder="Введите имена..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Тип поминовения</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="proskomedia_type" id="proskomediaType1" value="health" checked>
+                                            <label class="form-check-label" for="proskomediaType1">О здравии</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="proskomedia_type" id="proskomediaType2" value="repose">
+                                            <label class="form-check-label" for="proskomediaType2">Об упокоении</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="proskomediaAmount" class="form-label">Сумма пожертвования</label>
+                                    <input type="text" class="form-control" id="proskomediaAmount" name="proskomedia_amount" placeholder="0">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="proskomediaYourName" class="form-label">Ваше имя</label>
+                                    <input type="text" class="form-control" id="proskomediaYourName" name="proskomedia_your_name" placeholder="Введите ваше имя">
+                                </div>
+
+                                <button type="submit" class="btn memorial-submit-btn">Заказать поминовение</button>
+                            </form>
+
+                            <div class="memorial-info mt-3">
+                                <p class="small">Если Ваша оплата прошла, то имена автоматически заносятся в списки и через день их начинают поминать. E-mail: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                            <div class="memorial-form-notice mt-3">
+                                <p>Ориентировочная сумма пожертвования определяется по числу вписанных Вами имён. Затем следует нажать на кнопку «Заказать поминовение» (после этого изменить сумму будет уже невозможно). Также перед отправкой записки о поминовении просим указать своё имя для того, чтобы у Вас была возможность проверить, внесли ли присланные Вами имена в списки поминовений.</p>
+                                <p>Заказав поминовение своих родных и близких за церковным богослужением, очень важно самим приходить на службы в храм вместе с Церковью молиться о дорогих и близких Вам людях; а также не оставлять домашней молитвы о них!</p>
+                                <p>Вопросы, связанные с приёмом поминовений, можно задать по адресу: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка: Декоративный блок -->
+                        <div class="col-lg-6">
+                            <div class="memorial-decorative-block" data-service="proskomedia">
+                                <div class="decorative-cross" aria-hidden="true"></div>
+                                <h6 class="decorative-service-title">Проскомидия</h6>
+                                <p class="decorative-service-type type-health" id="proskomediaDecorativeType">О здравии</p>
+                                <div class="names-list" id="proskomediaNamesList">
+                                    <p class="text-muted">Введите имена в поле слева</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Обедня -->
+    <div class="modal fade" id="liturgyModal" tabindex="-1" aria-labelledby="liturgyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content memorial-modal">
+                <div class="modal-header memorial-header">
+                    <h5 class="modal-title" id="liturgyModalLabel">Обедня</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Левая колонка: Форма -->
+                        <div class="col-lg-6">
+                            <form id="liturgyForm">
+                                <div class="memorial-instructions">
+                                    <p>Вам нужно написать имена православных христиан, о которых следует молиться. В подаваемых записках необходимо записывать церковные имена (данные при Святом Крещении), указывая их в родительном падеже («Михаила», «Анастасии», «Антония», «Фотинии», «Петра», «Марии») по одному имени в строке или через запятую.</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="liturgyNames" class="form-label">Имена</label>
+                                    <textarea class="form-control memorial-textarea" id="liturgyNames" name="liturgy_names" rows="8" placeholder="Введите имена..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Тип поминовения</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="liturgy_type" id="liturgyType1" value="health" checked>
+                                            <label class="form-check-label" for="liturgyType1">О здравии</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="liturgy_type" id="liturgyType2" value="repose">
+                                            <label class="form-check-label" for="liturgyType2">Об упокоении</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="liturgyAmount" class="form-label">Сумма пожертвования</label>
+                                    <input type="text" class="form-control" id="liturgyAmount" name="liturgy_amount" placeholder="0">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="liturgyYourName" class="form-label">Ваше имя</label>
+                                    <input type="text" class="form-control" id="liturgyYourName" name="liturgy_your_name" placeholder="Введите ваше имя">
+                                </div>
+
+                                <button type="submit" class="btn memorial-submit-btn">Заказать поминовение</button>
+                            </form>
+
+                            <div class="memorial-info mt-3">
+                                <p class="small">Если Ваша оплата прошла, то имена автоматически заносятся в списки и через день их начинают поминать. E-mail: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                            <div class="memorial-form-notice mt-3">
+                                <p>Ориентировочная сумма пожертвования определяется по числу вписанных Вами имён. Затем следует нажать на кнопку «Заказать поминовение» (после этого изменить сумму будет уже невозможно). Также перед отправкой записки о поминовении просим указать своё имя для того, чтобы у Вас была возможность проверить, внесли ли присланные Вами имена в списки поминовений.</p>
+                                <p>Заказав поминовение своих родных и близких за церковным богослужением, очень важно самим приходить на службы в храм вместе с Церковью молиться о дорогих и близких Вам людях; а также не оставлять домашней молитвы о них!</p>
+                                <p>Вопросы, связанные с приёмом поминовений, можно задать по адресу: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка: Декоративный блок -->
+                        <div class="col-lg-6">
+                            <div class="memorial-decorative-block" data-service="liturgy">
+                                <div class="decorative-cross" aria-hidden="true"></div>
+                                <h6 class="decorative-service-title">Обедня</h6>
+                                <p class="decorative-service-type type-health" id="liturgyDecorativeType">О здравии</p>
+                                <div class="names-list" id="liturgyNamesList">
+                                    <p class="text-muted">Введите имена в поле слева</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Псалтырь -->
+    <div class="modal fade" id="psalterModal" tabindex="-1" aria-labelledby="psalterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content memorial-modal">
+                <div class="modal-header memorial-header">
+                    <h5 class="modal-title" id="psalterModalLabel">Псалтырь</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Левая колонка: Форма -->
+                        <div class="col-lg-6">
+                            <form id="psalterForm">
+                                <div class="memorial-instructions">
+                                    <p>Вам нужно написать имена православных христиан, о которых следует молиться. В подаваемых записках необходимо записывать церковные имена (данные при Святом Крещении), указывая их в родительном падеже («Михаила», «Анастасии», «Антония», «Фотинии», «Петра», «Марии») по одному имени в строке или через запятую.</p>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="psalterNames" class="form-label">Имена</label>
+                                    <textarea class="form-control memorial-textarea" id="psalterNames" name="psalter_names" rows="8" placeholder="Введите имена..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Тип поминовения</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psalter_type" id="psalterType1" value="health" checked>
+                                            <label class="form-check-label" for="psalterType1">О здравии</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psalter_type" id="psalterType2" value="repose">
+                                            <label class="form-check-label" for="psalterType2">Об упокоении</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Срок поминовения</label>
+                                    <div class="memorial-radio-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psalter_period" id="psalterPeriod1" value="40_days" checked>
+                                            <label class="form-check-label" for="psalterPeriod1">40 дней</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psalter_period" id="psalterPeriod2" value="half_year">
+                                            <label class="form-check-label" for="psalterPeriod2">На полгода</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="psalter_period" id="psalterPeriod3" value="year">
+                                            <label class="form-check-label" for="psalterPeriod3">На год</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="psalterAmount" class="form-label">Сумма пожертвования</label>
+                                    <input type="text" class="form-control" id="psalterAmount" name="psalter_amount" placeholder="0">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="psalterYourName" class="form-label">Ваше имя</label>
+                                    <input type="text" class="form-control" id="psalterYourName" name="psalter_your_name" placeholder="Введите ваше имя">
+                                </div>
+
+                                <button type="submit" class="btn memorial-submit-btn">Заказать поминовение</button>
+                            </form>
+
+                            <div class="memorial-info mt-3">
+                                <p class="small">Если Ваша оплата прошла, то имена автоматически заносятся в списки и через день их начинают поминать. E-mail: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                            <div class="memorial-form-notice mt-3">
+                                <p>Ориентировочная сумма пожертвования определяется по числу вписанных Вами имён. Затем следует нажать на кнопку «Заказать поминовение» (после этого изменить сумму будет уже невозможно). Также перед отправкой записки о поминовении просим указать своё имя для того, чтобы у Вас была возможность проверить, внесли ли присланные Вами имена в списки поминовений.</p>
+                                <p>Заказав поминовение своих родных и близких за церковным богослужением, очень важно самим приходить на службы в храм вместе с Церковью молиться о дорогих и близких Вам людях; а также не оставлять домашней молитвы о них!</p>
+                                <p>Вопросы, связанные с приёмом поминовений, можно задать по адресу: <a href="mailto:test@test.ru">test@test.ru</a></p>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка: Декоративный блок -->
+                        <div class="col-lg-6">
+                            <div class="memorial-decorative-block" data-service="psalter">
+                                <div class="decorative-cross" aria-hidden="true"></div>
+                                <h6 class="decorative-service-title">Псалтырь</h6>
+                                <p class="decorative-service-type type-health" id="psalterDecorativeType">О здравии</p>
+                                <p class="decorative-service-period" id="psalterDecorativePeriod">40 дней</p>
+                                <div class="names-list" id="psalterNamesList">
+                                    <p class="text-muted">Введите имена в поле слева</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="memorial_forms.js"></script>
+</body>
+</html>

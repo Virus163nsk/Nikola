@@ -1,0 +1,16 @@
+# Сохранение проекта в Git
+
+## 1. Установите Git (если ещё не установлен):
+   sudo apt install git
+
+## 2. Выполните в папке проекта (/home/virus/Site/Nikola):
+
+   git init
+   git add memorial_forms.html memorial_forms.css memorial_forms.js .gitignore
+   git commit -m "Формы церковных поминовений: Молебен, Поминовение, Проскомидия, Обедня, Псалтырь"
+
+## 3. (Опционально) Подключите удалённый репозиторий и отправьте:
+
+   git remote add origin <URL вашего репозитория>
+   git branch -M main
+   git push -u origin main

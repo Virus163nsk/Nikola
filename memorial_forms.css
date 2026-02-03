@@ -1,0 +1,398 @@
+/* Основные цвета и стили */
+:root {
+    --cream-bg: #f5f0e8;
+    --light-cream: #faf8f3;
+    --gold: #d4af37;
+    --dark-gold: #b8941f;
+    --green-accent: #6b8e23;
+    --dark-green: #556b2f;
+    --text-dark: #3a3a3a;
+    --border-color: #e0d5c4;
+}
+
+body {
+    background-color: var(--cream-bg);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--text-dark);
+}
+
+/* Модальное окно */
+.memorial-modal {
+    background-color: var(--light-cream);
+    border-radius: 15px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.memorial-header {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--dark-gold) 100%);
+    color: white;
+    border-bottom: 2px solid var(--dark-gold);
+    border-radius: 13px 13px 0 0;
+    padding: 1rem 1.5rem;
+}
+
+.memorial-header .modal-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.memorial-header .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+}
+
+.memorial-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+/* Инструкции */
+.memorial-instructions {
+    background-color: rgba(212, 175, 55, 0.1);
+    border-left: 4px solid var(--gold);
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+
+.memorial-instructions p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+/* Форма */
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-control {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+    outline: none;
+}
+
+.memorial-textarea {
+    min-height: 150px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Радиокнопки */
+.memorial-radio-group {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.form-check {
+    margin-bottom: 0.75rem;
+}
+
+.form-check:last-child {
+    margin-bottom: 0;
+}
+
+.form-check-input {
+    border-color: var(--gold);
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--green-accent);
+    border-color: var(--green-accent);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(107, 142, 35, 0.25);
+}
+
+.form-check-label {
+    cursor: pointer;
+    color: var(--text-dark);
+    margin-left: 0.5rem;
+}
+
+/* Кнопка отправки */
+.memorial-submit-btn {
+    background: linear-gradient(135deg, var(--green-accent) 0%, var(--dark-green) 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(107, 142, 35, 0.3);
+}
+
+.memorial-submit-btn:hover {
+    background: linear-gradient(135deg, var(--dark-green) 0%, var(--green-accent) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(107, 142, 35, 0.4);
+    color: white;
+}
+
+.memorial-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Информационный текст */
+.memorial-info {
+    background-color: rgba(107, 142, 35, 0.1);
+    border-left: 4px solid var(--green-accent);
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+}
+
+.memorial-info p {
+    margin: 0;
+    color: var(--text-dark);
+    font-style: italic;
+}
+
+/* Текст-инструкция внизу формы (ориентировочная сумма, кнопка, вопросы) */
+.memorial-form-notice {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: rgba(224, 213, 196, 0.2);
+    border-left: 4px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.memorial-form-notice p {
+    margin: 0 0 0.75rem 0;
+}
+
+.memorial-form-notice p:last-child {
+    margin-bottom: 0;
+}
+
+.memorial-form-notice a {
+    color: var(--green-accent);
+    text-decoration: none;
+}
+
+.memorial-form-notice a:hover {
+    text-decoration: underline;
+}
+
+/* Декоративный блок */
+.memorial-decorative-block {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(184, 148, 31, 0.1) 100%);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-height: 400px;
+    box-shadow: inset 0 2px 10px rgba(212, 175, 55, 0.2);
+    position: relative;
+}
+
+.memorial-decorative-block::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, var(--gold), var(--green-accent));
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* Крест в декоративном блоке (православный восьмиконечный стиль) */
+.decorative-cross {
+    width: 24px;
+    height: 40px;
+    margin: 0 auto 1rem;
+    position: relative;
+}
+
+.decorative-cross::before,
+.decorative-cross::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--dark-gold) 100%);
+    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.4);
+}
+
+/* Вертикальная перекладина */
+.decorative-cross::before {
+    width: 6px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Горизонтальная перекладина */
+.decorative-cross::after {
+    width: 20px;
+    height: 6px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 2px;
+}
+
+.decorative-service-title {
+    color: var(--dark-gold);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.5rem;
+}
+
+.decorative-service-type {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.decorative-service-type.type-health {
+    color: var(--green-accent);
+}
+
+.decorative-service-type.type-repose {
+    color: #a52a2a;
+}
+
+.decorative-service-period {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--dark-gold);
+}
+
+.decorative-title {
+    color: var(--dark-gold);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.5rem;
+}
+
+.names-list {
+    min-height: 300px;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    font-family: 'Georgia', serif;
+}
+
+.names-list p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+.name-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px dotted var(--border-color);
+    color: var(--text-dark);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.name-item:last-child {
+    border-bottom: none;
+}
+
+.name-number {
+    color: var(--gold);
+    font-weight: 700;
+    margin-right: 0.5rem;
+}
+
+.name-text {
+    text-transform: capitalize;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 991.98px) {
+    .modal-dialog {
+        margin: 1rem;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .memorial-decorative-block {
+        margin-top: 2rem;
+        min-height: 250px;
+    }
+
+    .names-list {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .memorial-header .modal-title {
+        font-size: 1.2rem;
+    }
+
+    .modal-body {
+        padding: 1rem;
+    }
+
+    .memorial-instructions,
+    .memorial-info {
+        font-size: 0.85rem;
+    }
+
+    .memorial-submit-btn {
+        padding: 0.65rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Анимация появления модального окна */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+/* Стили для кнопок открытия модальных окон (демо) */
+.btn-primary {
+    background-color: var(--green-accent);
+    border-color: var(--green-accent);
+    margin: 0.25rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}
