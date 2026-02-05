@@ -1,29 +1,30 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Находим все радиокнопки для «Об упокоении» и «О здравии»
-    const reposeRadios = document.querySelectorAll('input[name="memorial_type"][value="repose"]');
-    const healthRadios = document.querySelectorAll('input[name="memorial_type"][value="health"]');
-    // Находим все изображения креста с атрибутами data-initial-src и data-repose-src
-    const crosses = document.querySelectorAll('.decorative-cross[data-initial-src][data-repose-src]');
+// Функция для изменения цвета креста в зависимости от выбора типа поминовения
+function changeCrossColor() {
+    // Находим все радио-кнопки "Об упокоении" в модальных окнах
+    const reposeRadios = document.querySelectorAll('input[name="memorial_type"][value="repose"], \
+                                                      input[name="proskomedia_type"][value="repose"], \
+                                                      input[name="liturgy_type"][value="repose"], \
+                                                      input[name="psalter_type"][value="repose"]');
 
-    // Функция для обновления всех крестов в зависимости от выбранного типа поминовения
-    function updateCrosses() {
-        // Проверяем, выбран ли хотя бы один «Об упокоении»
-        const isReposeSelected = Array.from(reposeRadios).some(radio => radio.checked);
-
-        crosses.forEach(img => {
-            img.src = isReposeSelected ? img.dataset.reposeSrc : img.dataset.initialSrc;
-        });
-    }
-
-    // Навешиваем обработчики на радиокнопки
+    // Для каждого радио-кнопки "Об упокоении" добавляем обработчик события
     reposeRadios.forEach(radio => {
-        radio.addEventListener('change', updateCrosses);
-    });
+        // Находим соответствующий крест
+        const crossImg = radio.closest('.modal').querySelector('.decorative-cross');
+        const initialSrc = crossImg.getAttribute('data-initial-src');
+        const reposeSrc = crossImg.getAttribute('data-repose-src');
 
-    healthRadios.forEach(radio => {
-        radio.addEventListener('change', updateCrosses);
+        // Обработчик события при изменении выбора
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                // Если выбрано "Об упокоении", меняем изображение креста на красный
+                crossImg.src = reposeSrc;
+            } else {
+                // Если выбрано "О здравии", возвращаем изначальное изображение креста
+                crossImg.src = initialSrc;
+            }
+        });
     });
+}
 
-    // Инициализация состояния при загрузке страницы
-    updateCrosses();
-});
+// Вызываем функцию после полной загрузки DOM
+document.addEventListener('DOMContentLoaded', changeCrossColor);
