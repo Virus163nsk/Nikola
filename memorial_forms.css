@@ -178,6 +178,8 @@ body {
     border-left: 4px solid var(--border-color);
     padding: 1rem;
     border-radius: 5px;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .memorial-form-notice p {
