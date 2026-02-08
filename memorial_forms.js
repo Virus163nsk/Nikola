@@ -53,6 +53,34 @@ function updateDecorativeType(elementId, isHealth) {
     el.classList.add(isHealth ? 'type-health' : 'type-repose');
 }
 
+// Функция для расчета итоговой суммы
+function calculateAmount(service, names, period = null) {
+    const namesCount = processNames(names).length;
+    
+    // Для обычных служб
+    if (service !== 'memorial' && service !== 'psalter') {
+        const basePrice = PRICES[service] || 0;
+        return basePrice * namesCount;
+    }
+    
+    // Для поминовения и псалтыря
+    const serviceConfig = PRICES[service];
+    if (!serviceConfig || !serviceConfig.base) return 0;
+    
+    const basePrice = serviceConfig.base;
+    const multipliers = serviceConfig.multipliers || {};
+    const periodMultiplier = multipliers[period] || 1;
+    
+    return Math.round(basePrice * namesCount * periodMultiplier);
+}
+
+// Функция для обновления поля суммы
+function updateAmount(service, names, amountInput, period = null) {
+    if (!amountInput) return;
+    const amount = calculateAmount(service, names, period);
+    amountInput.value = amount;
+}
+
 // Инициализация формы с обновлением имён в реальном времени
 function initializeForm(textareaId, displayElementId, options) {
     options = options || {};
@@ -93,6 +121,23 @@ function initializeForm(textareaId, displayElementId, options) {
             });
         });
     }
+    
+    // Обновление суммы при инициализации, если указано поле суммы
+    if (options.amountInput && textarea) {
+        var service = textarea.closest('.modal').querySelector('.memorial-decorative-block').getAttribute('data-service');
+        var period = null;
+        
+        // Определяем выбранный срок для поминовения и псалтыря
+        if (service === 'memorial') {
+            var selectedPeriod = document.querySelector('input[name="memorial_period"]:checked');
+            if (selectedPeriod) period = selectedPeriod.value;
+        } else if (service === 'psalter') {
+            var selectedPeriod = document.querySelector('input[name="psalter_period"]:checked');
+            if (selectedPeriod) period = selectedPeriod.value;
+        }
+        
+        updateAmount(service, textarea.value, options.amountInput, period);
+    }
 }
 
 // Сброс декоративного блока при закрытии модального окна
@@ -101,7 +146,43 @@ function getDefaultDecorativeState(service) {
     return { text: 'О здравии', typeClass: 'type-health' };
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+let PRICES = {};
+
+// Загружаем цены из файла
+async function loadPrices() {
+    try {
+        const response = await fetch('pricing.json');
+        if (!response.ok) throw new Error('Не удалось загрузить цены');
+        PRICES = await response.json();
+    } catch (error) {
+        console.error('Ошибка загрузки цен:', error);
+        // Устанавливаем цены по умолчанию в случае ошибки
+        PRICES = {
+            moleben: 50,
+            memorial: {
+                "base": 100,
+                "multipliers": {
+                    "sorokoust": 1,
+                    "half_year": 2.5,
+                    "year": 5
+                }
+            },
+            proskomedia: 150,
+            liturgy: 200,
+            psalter: {
+                "base": 250,
+                "multipliers": {
+                    "40_days": 1,
+                    "half_year": 2.5,
+                    "year": 5
+                }
+            }
+        };
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadPrices();
     // Молебен
     var molebenRadios = [
         document.querySelector('input[name="moleben_type"][value="thanksgiving"]'),
@@ -112,16 +193,26 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('input[name="moleben_type"][value="prisoners"]'),
         document.querySelector('input[name="moleben_type"][value="beginning"]')
     ].filter(Boolean);
+    var molebenAmountInput = document.getElementById('molebenAmount');
     initializeForm('molebenNames', 'molebenNamesList', {
         decorativeTypeId: 'molebenDecorativeType',
-        molebenTypeRadios: molebenRadios
+        molebenTypeRadios: molebenRadios,
+        amountInput: molebenAmountInput
     });
+    // Обновление суммы при изменении имен
+    document.getElementById('molebenNames').addEventListener('input', function() {
+        updateAmount('moleben', this.value, molebenAmountInput);
+    });
+    // Инициализация суммы
+    updateAmount('moleben', document.getElementById('molebenNames').value, molebenAmountInput);
 
     // Поминовение
     var memorialTypeRadios = document.querySelectorAll('input[name="memorial_type"]');
+    var memorialAmountInput = document.getElementById('memorialAmount');
     initializeForm('memorialNames', 'memorialNamesList', {
         decorativeTypeId: 'memorialDecorativeType',
-        healthReposeRadios: Array.prototype.slice.call(memorialTypeRadios)
+        healthReposeRadios: Array.prototype.slice.call(memorialTypeRadios),
+        amountInput: memorialAmountInput
     });
     var memorialPeriodEl = document.getElementById('memorialDecorativePeriod');
     if (memorialPeriodEl) {
@@ -129,29 +220,55 @@ document.addEventListener('DOMContentLoaded', function() {
             radio.addEventListener('change', function() {
                 var label = MEMORIAL_PERIOD_LABELS[this.value];
                 if (label) memorialPeriodEl.textContent = label;
+                // Пересчитываем сумму при изменении срока
+                updateAmount('memorial', document.getElementById('memorialNames').value, memorialAmountInput);
             });
         });
     }
+    // Обновление суммы при изменении имен
+    document.getElementById('memorialNames').addEventListener('input', function() {
+        updateAmount('memorial', this.value, memorialAmountInput);
+    });
+    // Инициализация суммы
+    updateAmount('memorial', document.getElementById('memorialNames').value, memorialAmountInput);
 
     // Проскомидия
     var proskomediaTypeRadios = document.querySelectorAll('input[name="proskomedia_type"]');
+    var proskomediaAmountInput = document.getElementById('proskomediaAmount');
     initializeForm('proskomediaNames', 'proskomediaNamesList', {
         decorativeTypeId: 'proskomediaDecorativeType',
-        healthReposeRadios: Array.prototype.slice.call(proskomediaTypeRadios)
+        healthReposeRadios: Array.prototype.slice.call(proskomediaTypeRadios),
+        amountInput: proskomediaAmountInput
     });
+    // Обновление суммы при изменении имен
+    document.getElementById('proskomediaNames').addEventListener('input', function() {
+        updateAmount('proskomedia', this.value, proskomediaAmountInput);
+    });
+    // Инициализация суммы
+    updateAmount('proskomedia', document.getElementById('proskomediaNames').value, proskomediaAmountInput);
 
     // Обедня
     var liturgyTypeRadios = document.querySelectorAll('input[name="liturgy_type"]');
+    var liturgyAmountInput = document.getElementById('liturgyAmount');
     initializeForm('liturgyNames', 'liturgyNamesList', {
         decorativeTypeId: 'liturgyDecorativeType',
-        healthReposeRadios: Array.prototype.slice.call(liturgyTypeRadios)
+        healthReposeRadios: Array.prototype.slice.call(liturgyTypeRadios),
+        amountInput: liturgyAmountInput
     });
+    // Обновление суммы при изменении имен
+    document.getElementById('liturgyNames').addEventListener('input', function() {
+        updateAmount('liturgy', this.value, liturgyAmountInput);
+    });
+    // Инициализация суммы
+    updateAmount('liturgy', document.getElementById('liturgyNames').value, liturgyAmountInput);
 
     // Псалтырь
     var psalterTypeRadios = document.querySelectorAll('input[name="psalter_type"]');
+    var psalterAmountInput = document.getElementById('psalterAmount');
     initializeForm('psalterNames', 'psalterNamesList', {
         decorativeTypeId: 'psalterDecorativeType',
-        healthReposeRadios: Array.prototype.slice.call(psalterTypeRadios)
+        healthReposeRadios: Array.prototype.slice.call(psalterTypeRadios),
+        amountInput: psalterAmountInput
     });
     var psalterPeriodEl = document.getElementById('psalterDecorativePeriod');
     if (psalterPeriodEl) {
@@ -159,9 +276,17 @@ document.addEventListener('DOMContentLoaded', function() {
             radio.addEventListener('change', function() {
                 var label = PSALTER_PERIOD_LABELS[this.value];
                 if (label) psalterPeriodEl.textContent = label;
+                // Пересчитываем сумму при изменении срока
+                updateAmount('psalter', document.getElementById('psalterNames').value, psalterAmountInput);
             });
         });
     }
+    // Обновление суммы при изменении имен
+    document.getElementById('psalterNames').addEventListener('input', function() {
+        updateAmount('psalter', this.value, psalterAmountInput);
+    });
+    // Инициализация суммы
+    updateAmount('psalter', document.getElementById('psalterNames').value, psalterAmountInput);
 
     // Отправка форм (демо)
     var forms = document.querySelectorAll('form[id$="Form"]');
@@ -169,6 +294,24 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            // Устанавливаем финальную сумму перед отправкой
+            var service = this.querySelector('.memorial-decorative-block').getAttribute('data-service');
+            var namesInput = this.querySelector('textarea[id$="Names"]');
+            var amountInput = this.querySelector('input[id$="Amount"]');
+            var period = null;
+            
+            if (service === 'memorial') {
+                var selectedPeriod = this.querySelector('input[name="memorial_period"]:checked');
+                if (selectedPeriod) period = selectedPeriod.value;
+            } else if (service === 'psalter') {
+                var selectedPeriod = this.querySelector('input[name="psalter_period"]:checked');
+                if (selectedPeriod) period = selectedPeriod.value;
+            }
+            
+            if (namesInput && amountInput) {
+                updateAmount(service, namesInput.value, amountInput, period);
+            }
+            
             console.log('Данные формы:', Object.fromEntries(formData));
             alert('Форма отправлена! (Это демо-версия)');
         });

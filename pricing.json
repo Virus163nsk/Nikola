@@ -1,0 +1,21 @@
+{
+  "moleben": 50,
+  "memorial": {
+    "base": 100,
+    "multipliers": {
+      "sorokoust": 1,
+      "half_year": 2.5,
+      "year": 5
+    }
+  },
+  "proskomedia": 150,
+  "liturgy": 200,
+  "psalter": {
+    "base": 250,
+    "multipliers": {
+      "40_days": 1,
+      "half_year": 2.5,
+      "year": 5
+    }
+  }
+}
