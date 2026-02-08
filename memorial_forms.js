@@ -221,16 +221,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var label = MEMORIAL_PERIOD_LABELS[this.value];
                 if (label) memorialPeriodEl.textContent = label;
                 // Пересчитываем сумму при изменении срока
-                updateAmount('memorial', document.getElementById('memorialNames').value, memorialAmountInput);
+                var selectedPeriod = document.querySelector('input[name="memorial_period"]:checked'); updateAmount('memorial', document.getElementById('memorialNames').value, memorialAmountInput, selectedPeriod ? selectedPeriod.value : null);
             });
         });
     }
     // Обновление суммы при изменении имен
     document.getElementById('memorialNames').addEventListener('input', function() {
-        updateAmount('memorial', this.value, memorialAmountInput);
+        var selectedPeriod = document.querySelector('input[name="memorial_period"]:checked'); updateAmount('memorial', this.value, memorialAmountInput, selectedPeriod ? selectedPeriod.value : null);
     });
     // Инициализация суммы
-    updateAmount('memorial', document.getElementById('memorialNames').value, memorialAmountInput);
+    var selectedPeriod = document.querySelector('input[name="memorial_period"]:checked'); updateAmount('memorial', document.getElementById('memorialNames').value, memorialAmountInput, selectedPeriod ? selectedPeriod.value : null);
 
     // Проскомидия
     var proskomediaTypeRadios = document.querySelectorAll('input[name="proskomedia_type"]');
@@ -277,16 +277,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 var label = PSALTER_PERIOD_LABELS[this.value];
                 if (label) psalterPeriodEl.textContent = label;
                 // Пересчитываем сумму при изменении срока
-                updateAmount('psalter', document.getElementById('psalterNames').value, psalterAmountInput);
+                var selectedPeriod = document.querySelector('input[name="psalter_period"]:checked'); updateAmount('psalter', document.getElementById('psalterNames').value, psalterAmountInput, selectedPeriod ? selectedPeriod.value : null);
             });
         });
     }
     // Обновление суммы при изменении имен
     document.getElementById('psalterNames').addEventListener('input', function() {
-        updateAmount('psalter', this.value, psalterAmountInput);
+        var selectedPeriod = document.querySelector('input[name="psalter_period"]:checked'); updateAmount('psalter', this.value, psalterAmountInput, selectedPeriod ? selectedPeriod.value : null);
     });
     // Инициализация суммы
-    updateAmount('psalter', document.getElementById('psalterNames').value, psalterAmountInput);
+    var selectedPeriod = document.querySelector('input[name="psalter_period"]:checked'); updateAmount('psalter', document.getElementById('psalterNames').value, psalterAmountInput, selectedPeriod ? selectedPeriod.value : null);
 
     // Отправка форм (демо)
     var forms = document.querySelectorAll('form[id$="Form"]');
